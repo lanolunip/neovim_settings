@@ -5,6 +5,7 @@ call plug#begin()
   Plug 'tpope/vim-commentary'
   Plug 'vim-airline/vim-airline' 
   Plug 'junegunn/fzf.vim' 
+  Plug 'preservim/tagbar'
 
 " Plug Colorscheme
   Plug 'glepnir/oceanic-material'
