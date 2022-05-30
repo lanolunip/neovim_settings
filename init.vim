@@ -19,8 +19,14 @@ call plug#end()
 set number
 set relativenumber
 set autoindent
+set tabstop=4
 set shiftwidth=4
+set expandtab
+set nowrap
+set cursorline
 set mouse=a
+set clipboard+=unnamedplus
+
 " Setter Colorscheme
 set background=dark
 colorscheme oceanic_material
@@ -39,6 +45,9 @@ nnoremap <C-f> :NERDTreeFind<CR>
 
 " Tagbar
 nmap <F8> :TagbarToggle<CR>
+
+" FuzzyFinder
+nnoremap <leader>p :Files<CR>
 
 " Universal
 nnoremap <leader>/ :noh<CR>
