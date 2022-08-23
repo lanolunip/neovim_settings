@@ -9,13 +9,23 @@ call plug#begin()
   Plug 'junegunn/fzf.vim'
 " Tagbar
   Plug 'preservim/tagbar'
-"  Plug 'universal-ctags/ctags'
+  Plug 'universal-ctags/ctags'
 
 " Plug Colorscheme
   Plug 'glepnir/oceanic-material'
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug Devicons
+  Plug 'ryanoasis/vim-devicons'
+" Plug LSPCONFIG  
+  Plug 'neovim/nvim-lspconfig'
+" Plug Indent Blankline
+  Plug 'lukas-reineke/indent-blankline.nvim'
+" Plug Vim Fugitive
+  Plug 'tpope/vim-fugitive'
 call plug#end()
 
 " Setter Config
+set encoding=utf-8
 set number
 set relativenumber
 set autoindent
@@ -26,6 +36,7 @@ set nowrap
 set cursorline
 set mouse=a
 set clipboard+=unnamedplus
+set ignorecase
 
 " Setter Colorscheme
 set background=dark
@@ -41,7 +52,11 @@ let mapleader=' '
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
+nnoremap <leader>f :NERDTreeFind<CR>
+
+" COC
+inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <silent><expr> <c-@> coc#refresh()
 
 " Tagbar
 nmap <F8> :TagbarToggle<CR>
@@ -57,3 +72,11 @@ let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#branch#enabled = 1
+" WSL yank support
+let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
+if executable(s:clip)
+    augroup WSLYank
+        autocmd!
+        autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
+    augroup END
+endif
