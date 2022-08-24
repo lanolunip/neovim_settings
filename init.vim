@@ -42,6 +42,9 @@ set ignorecase
 set termguicolors
 set updatetime=100
 
+" Highlight yang di Yank
+au TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=150}
+
 " Setter Colorscheme
 set background=dark
 colorscheme oceanic_material
