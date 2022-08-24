@@ -22,6 +22,8 @@ call plug#begin()
   Plug 'lukas-reineke/indent-blankline.nvim'
 " Plug Vim Fugitive
   Plug 'tpope/vim-fugitive'
+" Plug Vim Gitgutter
+  Plug 'airblade/vim-gitgutter'
 call plug#end()
 
 " Setter Config
@@ -38,6 +40,7 @@ set mouse=a
 set clipboard+=unnamedplus
 set ignorecase
 set termguicolors
+set updatetime=100
 
 " Setter Colorscheme
 set background=dark
