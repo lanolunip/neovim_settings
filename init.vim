@@ -37,6 +37,7 @@ set cursorline
 set mouse=a
 set clipboard+=unnamedplus
 set ignorecase
+set termguicolors
 
 " Setter Colorscheme
 set background=dark
