@@ -13,6 +13,8 @@ call plug#begin()
 
 " Plug Colorscheme
   Plug 'glepnir/oceanic-material'
+  Plug 'tomasiser/vim-code-dark'
+" COC Nvim
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug Devicons
   Plug 'ryanoasis/vim-devicons'
