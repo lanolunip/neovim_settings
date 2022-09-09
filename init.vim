@@ -9,7 +9,7 @@ call plug#begin()
   Plug 'junegunn/fzf.vim'
 " Tagbar
   Plug 'preservim/tagbar'
-  " Plug 'universal-ctags/ctags'
+  " Plug 'universal-ctags/ctags' install universal ctags to the machine (not via Vim)
 
 " Plug Colorscheme
   Plug 'glepnir/oceanic-material'
@@ -49,7 +49,7 @@ au TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeou
 
 " Setter Colorscheme
 set background=dark
-colorscheme oceanic_material
+colorscheme codedark
 
 
 " Remap Key
@@ -64,8 +64,11 @@ nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
 
 " COC
-inoremap <silent><expr> <c-space> coc#refresh()
-inoremap <silent><expr> <c-@> coc#refresh()
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
 
 " Tagbar
 nmap <F8> :TagbarToggle<CR>
@@ -77,10 +80,12 @@ nnoremap <leader>p :Files<CR>
 nnoremap <leader>/ :noh<CR>
 
 " Formatter Airline
+let g:iarline_theme='onedark'
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#branch#enabled = 1
+
 " WSL yank support
 let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
 if executable(s:clip)
@@ -110,9 +115,3 @@ function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
