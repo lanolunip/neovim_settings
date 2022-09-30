@@ -64,11 +64,11 @@ nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
 
 " COC
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
+" Go to Definition
+nmap <silent> gd <Plug>(coc-definition)
+"Masukan ke coc-settings.json jika ingin merubah behaviour gd
+" coc.preferences.jumpCommand": \"tab drop atau tabe\" open in new tab
+" coc.preferences.jumpCommand": \"split atau vsplit\" open di split atau vsplit
 
 " Tagbar
 nmap <F8> :TagbarToggle<CR>
