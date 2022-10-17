@@ -26,6 +26,8 @@ call plug#begin()
   Plug 'tpope/vim-fugitive'
 " Plug Vim Gitgutter
   Plug 'airblade/vim-gitgutter'
+" Plug Fix Cursos Patah2 ketika banyak buffer (dan menahan movement key)
+  Plug 'antoinemadec/FixCursorHold.nvim'
 call plug#end()
 
 " Setter Config
@@ -50,7 +52,6 @@ au TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeou
 " Setter Colorscheme
 set background=dark
 colorscheme codedark
-
 
 " Remap Key
 nnoremap <SPACE> <Nop>
@@ -116,6 +117,7 @@ function! CheckBackspace() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+" Auto mkview dan loadview ketika ada buffer terbuka
 augroup AutoSaveGroup
   autocmd!
   " view files are about 500 bytes
@@ -125,3 +127,8 @@ augroup AutoSaveGroup
   autocmd BufWinLeave,BufLeave,BufWritePost,BufHidden,QuitPre ?* nested silent! mkview!
   autocmd BufWinEnter ?* silent! loadview
 augroup end
+
+" Fix Cursor Lemot (untuk vim <= 7.2)
+" in millisecond, used for both CursorHold and CursorHoldI,
+" use updatetime instead if not defined
+let g:cursorhold_updatetime = 100
