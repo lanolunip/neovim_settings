@@ -17,7 +17,7 @@ vim.call('plug#begin', '$HOME/AppData/Local/nvim-data/plugged')
   Plug('neoclide/coc.nvim', { branch = 'release' })
 -- Plug Devicons
   Plug 'ryanoasis/vim-devicons'
--- Plug LSPCONFIG  
+-- Plug LSPCONFIG
   Plug 'neovim/nvim-lspconfig'
 -- Plug Indent Blankline
   Plug 'lukas-reineke/indent-blankline.nvim'

@@ -1,6 +1,7 @@
 local nnoremap = require('em_weh.keymap').nnoremap
 local inoremap = require('em_weh.keymap').inoremap
 local nmap = require('em_weh.keymap').nmap
+local fn = vim.fn
 
 -- Hide Highlight
 nnoremap('<leader>/', '<cmd>noh<CR>', {silent = true})
@@ -10,11 +11,6 @@ nnoremap('<leader>n', '<cmd>NERDTreeFocus<CR>')
 nnoremap('<C-n>', '<cmd>NERDTree<CR>')
 nnoremap('<C-t>', '<cmd>NERDTreeToggle<CR>')
 nnoremap('<leader>f', '<cmd>NERDTreeFind<CR>')
-
-inoremap('<C-space>', 'coc#refresh()', {
-    silent = true,
-    expr = true
-})
 
 -- Tagbar
 nmap('<F8>' ,'<cmd>TagbarToggle<CR>')
@@ -36,7 +32,7 @@ nmap('gd', '<Plug>(coc-definition)', {silent = true})
 -- no select by `"suggest.noselect": true` in your configuration file.
 inoremap(
     '<TAB>',
-    'coc#pum#visible() ? coc#pum#next(1): CheckBackspace() ? "<Tab>" : coc#refresh()',
+    'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()',
     {
         silent = true,
         expr = true
@@ -53,11 +49,15 @@ inoremap(
 -- <C-g>u breaks current undo, please make your own choice.
 inoremap(
     '<CR>',
-    'coc#pum#visible() ? coc#pum#confirm() : "<C-g>u <CR> <c-r>=coc#on_enter() <CR>"',
+    'coc#pum#visible() ? coc#pum#confirm() : "<C-g>u<CR><c-r>=coc#on_enter()<CR>"',
     { silent = true, expr = true }
 )
 
-vim.cmd([[function! CheckBackspace() abort
-  let col = col(".") - 1
-  return !col || getline(".")[col - 1]  =~# "\s"
-endfunction]])
+function _G.check_back_space()
+    local col = fn.col('.') - 1
+    if col == 0 or fn.getline('.'):sub(col, col):match('%s') then
+        return true
+    else
+        return false
+    end
+end
