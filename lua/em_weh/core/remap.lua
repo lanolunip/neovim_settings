@@ -1,6 +1,6 @@
-local nnoremap = require('em_weh.keymap').nnoremap
-local inoremap = require('em_weh.keymap').inoremap
-local nmap = require('em_weh.keymap').nmap
+local nnoremap = require('em_weh.core.keymap').nnoremap
+local inoremap = require('em_weh.core.keymap').inoremap
+local nmap = require('em_weh.core.keymap').nmap
 local fn = vim.fn
 
 -- Hide Highlight
@@ -32,26 +32,29 @@ nmap('gd', '<Plug>(coc-definition)', {silent = true})
 -- no select by `"suggest.noselect": true` in your configuration file.
 inoremap(
     '<TAB>',
-    'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()',
-    {
-        silent = true,
-        expr = true
-    }
+    'v:lua.next_coc_pum()',
+    { silent = true, expr = true, replace_keycodes = false}
 )
 
 inoremap(
     '<S-TAB>',
-    'coc#pum#visible() ? coc#pum#prev(1) : "<C-h>"',
-    { expr = true }
+    'v:lua.prev_coc_pum()',
+    { expr = true, replace_keycodes = false}
 )
 
 -- Make <CR> to accept selected completion item or notify coc.nvim to format
 -- <C-g>u breaks current undo, please make your own choice.
 inoremap(
     '<CR>',
-    'coc#pum#visible() ? coc#pum#confirm() : "<C-g>u<CR><c-r>=coc#on_enter()<CR>"',
-    { silent = true, expr = true }
+    'v:lua.confirm_coc_pum()',
+    { silent = true, expr = true, replace_keycodes = false}
 )
+-- The function is called `t` for `termcodes`.
+-- You don't have to call it that, but I find the terseness convenient
+local function t(str)
+    -- Adjust boolean arguments as needed
+    return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
 
 function _G.check_back_space()
     local col = fn.col('.') - 1
@@ -59,5 +62,31 @@ function _G.check_back_space()
         return true
     else
         return false
+    end
+end
+
+function _G.next_coc_pum()
+    if vim.fn['coc#pum#visible']() == 1 then
+        return vim.fn['coc#pum#next'](1)
+    elseif check_back_space() then
+        return t'<Tab>'
+    else
+        return vim.fn['coc#refresh']()
+    end
+end
+
+function _G.prev_coc_pum()
+    if vim.fn['coc#pum#visible']() == 1 then
+        return vim.fn['coc#pum#prev'](1)
+    else
+        return t'<C-h>'
+    end
+end
+
+function _G.confirm_coc_pum()
+    if vim.fn['coc#pum#visible']() == 1 then
+        return vim.fn['coc#pum#confirm']()
+    else
+        return t'<C-g>u<CR><c-r>=coc#on_enter()<CR>'
     end
 end
