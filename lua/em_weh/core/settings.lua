@@ -22,3 +22,4 @@ g['airline#extensions#tabline#left_sep'] = ' '
 g['airline#extensions#tabline#left_alt_sep'] = '|'
 g['airline#extensions#tabline#enabled'] = true
 g['airline#extensions#branch#enabled'] = true
+g['airline#extensions#tmuxline#enabled'] = false
