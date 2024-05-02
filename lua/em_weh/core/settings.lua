@@ -13,7 +13,7 @@ o.cursorline = true
 o.mouse:append('a')
 o.clipboard:append("unnamedplus")
 o.ignorecase = true
-o.termguicolors = true
+-- o.termguicolors = true
 
 g.mapleader = " "
 
